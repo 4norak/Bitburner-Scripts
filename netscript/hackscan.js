@@ -1,7 +1,7 @@
 // TODO: Command line arguments
 
 const MONEY_SCRIPT = "money-script.js";
-const MAX_MONEY_RAM = 33272;
+const MAX_MONEY_RAM = 449373;
 let EXEC_SERVERS = ["home"];
 const COLORS = {
 	"red": "\x1b[31m",
@@ -57,7 +57,7 @@ class ServerInfo {
 	money_scripts;
 
 	/**
-	 * If there is a coding contract on the server
+	 * If all coding contracts on the server were processed successfully
 	 * 
 	 * @type {?boolean}
 	 */
@@ -176,19 +176,24 @@ function run_money_scripts(ns, server) {
  * @param {NS} ns
  * @param {Server} server The server the contracts are on
  * 
- * @return {Promise<boolean>} If there are any contracts on the server
+ * @return {Promise<boolean|undefined>} True if all contracts were processed successfully,
+ * false if there was an error and undefined if there might have been an one
  */
 async function process_contracts(ns, server) {
 	let contracts = ns.ls(server.hostname, ".cct");
-
+	let succ = ns.ls(server.hostname, "contract-error-").length === 0;
+	
 	for (let filename of contracts) {
-		// TODO: Implement better check for tries
-		if (ns.codingcontract.getNumTriesRemaining(filename, server.hostname) != 9) {
-			await ns.tryWritePort(CONTRACT_PORT, JSON.stringify({filename: filename, hostname: server.hostname}));
+		// If there is an error file for the specific contract
+		if (ns.fileExists("contract-error-" + filename.replace(".cct", ".txt"), server.hostname)) {
+			continue;
 		}
+
+		if (!(await ns.tryWritePort(CONTRACT_PORT, JSON.stringify({filename: filename, hostname: server.hostname}))) && succ === true)
+			err = undefined;
 	}
 
-	return contracts.length > 0;
+	return succ;
 }
 
 /**
@@ -266,7 +271,7 @@ async function deepscan(ns, root, level = 0, server_info = []) {
 	 */
 	for (let hostname of ns.scan(root.hostname))
 		await deepscan(ns, ns.getServer(hostname), level + 1, server_info);
-
+	
 	return server_info;
 }
 
@@ -343,8 +348,10 @@ function print_logs(ns, server_info, log_fun = ns.print) {
 			str += " ₿";
 		}
 
-		if (si.coding_contract)
+		if (si.coding_contract === false)
 			str += COLORS.red + " 🗎";
+		else if (si.coding_contract === undefined)
+			str += COLORS.yallow + " 🗎";
 
 		if (si.backdoor)
 			str += COLORS.default + " ⚑";
