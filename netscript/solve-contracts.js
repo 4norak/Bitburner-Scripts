@@ -15,16 +15,30 @@ export async function main(ns) {
 				continue;
 			}
 
-			let res = await fetch(`${BASE_URL}?c_type=${contract.type}&data=${JSON.stringify(contract.data)}`);
-			if (res.ok) {
-				if (ns.codingcontract.attempt(await res.json(), contract.filename, contract.hostname))
-				 	ns.print("Solved contract " + contract.filename + " on " + contract.hostname);
-				else
-					ns.print("Failed contract " + contract.filename + " on " + contract.hostname);
+			let res;
+			try {
+				res = await fetch(`${BASE_URL}?c_type=${contract.type}&data=${JSON.stringify(contract.data)}`);
+			} catch (err) {
+				ns.print("API fetch failed: " + err.message);
+				continue;
 			}
-			else
+
+			if (!res.ok) {
 				ns.print("Server error for contract " + contract.filename + " on " + contract.hostname);
+				continue;
+			}
+
+			try {
+				res = res.json();
+			} catch(err) {
+				ns.print("Answer for contract " + contract.filename + " on " + contract.hostname + " could not be parsed");
+			}
+
+			if (ns.codingcontract.attempt(await res.json(), contract.filename, contract.hostname))
+				ns.print("Solved contract " + contract.filename + " on " + contract.hostname);
+			else
+				ns.print("Failed contract " + contract.filename + " on " + contract.hostname);
 		}
-		await ns.sleep(20000);
+		await ns.sleep(60000);
 	}
 }
