@@ -10,7 +10,7 @@ def _total_ways_sum_II(data):
     return bitburner.total_ways_sum(*data)
 
 def _array_jump_game(data):
-    return bitburner.array_jump_num(data) != -1
+    return int(bitburner.array_jump_num(data) != -1)
 
 def _array_jump_game_II(data):
     return max(0, bitburner.array_jump_num(data))
