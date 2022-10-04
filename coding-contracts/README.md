@@ -18,4 +18,4 @@ You can compile it using setup.py.
 
 ## setup.py
 
-Compile clib.c to a usable C-extension.
+Compiles clib.c to a usable C-extension.

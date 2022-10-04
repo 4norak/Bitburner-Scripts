@@ -2,12 +2,12 @@
 
 Internal Bitburner netscript scripts.
 
-## augment\_price.js
+## augment-price.js
 
 Calculate the price for buying augmentations with the given base prices in the
 given order.
 
-## current\_exp\_gain.js
+## current-exp-gain.js
 
 Calculates the current hacking exp gain across all running scripts.
 
@@ -37,8 +37,8 @@ about them.
 
 | Symbol | Meaning |
 |:------:|:--------|
-| `✘` | Player does not have root access to server |
-| `✔` | Player has root access to server |
+| `✘` | Player does not have root access to the server |
+| `✔` | Player has root access to the server |
 | `₿` | There are money scripts running for the server |
 | `🗎` | There is a coding contract on the server |
 | `⚑` | There is a backdoor on the server |
@@ -56,11 +56,17 @@ about them.
 Script to gain money from server.  
 It also slowly weakens the server.
 
+### Arguments
+
+| Argument | Meaning |
+|:--------:|:--------|
+| `_` | The hostname of the server to gain money from |
+
 ## solve-contracts.js
 
 Solves contracts by using the api in [coding-contracts](/coding-contracts).  
-Contracts are given to it by encoding {"filename": filename, "hostname": hostname}
-and sending them to the contract port specified as a constant.
+Contracts are given to it by encoding `{"filename": filename, "hostname": hostname}`
+as JSON and sending them to the contract port specified as a constant.
 
 ## trading.js
 
