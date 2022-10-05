@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from concurrent.futures import ProcessPoolExecutor, wait
 from json import loads
 
@@ -75,6 +76,15 @@ contract_funs = {
 
 app = FastAPI()
 pool = ProcessPoolExecutor()
+
+
+origins = [
+    "http://localhost",
+    "http://localhost:8080",
+    "https://danielyxie.github.io"
+]
+
+app.add_middleware(CORSMiddleware, allow_origins=origins)
 
 
 @app.get("/solve_contract")
