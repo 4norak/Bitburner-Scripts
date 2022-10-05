@@ -190,7 +190,7 @@ async function process_contracts(ns, server) {
 		}
 
 		if (!(await ns.tryWritePort(CONTRACT_PORT, JSON.stringify({filename: filename, hostname: server.hostname}))) && succ === true)
-			err = undefined;
+			succ = undefined;
 	}
 
 	return succ;
@@ -351,7 +351,7 @@ function print_logs(ns, server_info, log_fun = ns.print) {
 		if (si.coding_contract === false)
 			str += COLORS.red + " 🗎";
 		else if (si.coding_contract === undefined)
-			str += COLORS.yallow + " 🗎";
+			str += COLORS.yellow + " 🗎";
 
 		if (si.backdoor)
 			str += COLORS.default + " ⚑";
