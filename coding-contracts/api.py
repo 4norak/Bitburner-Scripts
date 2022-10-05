@@ -17,6 +17,9 @@ def _array_jump_game(data):
 def _array_jump_game_II(data):
     return max(0, bitburner.array_jump_num(data))
 
+def _generate_ips(data):
+    return str(bitburner.generate_ips(data)).replace("'", "")
+
 def _algorithm_stock_I(data):
     return bitburner.algorithmic_stock(data, 1)
 
@@ -53,7 +56,7 @@ contract_funs = {
     "Array Jumping Game": _array_jump_game,
     "Array Jumping Game II": _array_jump_game_II,
     "Merge Overlapping Intervals": bitburner.merge_overlapping_intervals,
-    "Generate IP Addresses": bitburner.generate_ips,
+    "Generate IP Addresses": _generate_ips,
     "Algorithmic Stock Trader I": _algorithm_stock_I,
     "Algorithmic Stock Trader II": _algorithm_stock_II,
     "Algorithmic Stock Trader III": _algorithm_stock_III,
