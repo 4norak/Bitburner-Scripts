@@ -124,6 +124,7 @@ export async function main(ns) {
 			catch (err) {
 				write_error(ns, contract, err);
 				ns.print(COLORS.red + "Contract error for contract " + contract.filename + " on " + contract.hostname + COLORS.default);
+				continue;
 			}
 
 			if (ns.codingcontract.attempt(answer, contract.filename, contract.hostname)) {
