@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from concurrent.futures import ProcessPoolExecutor, wait
 from json import loads
+from traceback import format_exc
 
 import bitburner
 
@@ -97,8 +98,8 @@ def solve_contract(c_type: str, data: str):
     try:
         # Run in own process to prevent blocking main process
         return pool.submit(contract_funs[c_type], data).result()
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e.args[0]))
+    except Exception:
+        raise HTTPException(status_code=500, detail=format_exc())
 
 @app.get("/ping")
 def ping():
