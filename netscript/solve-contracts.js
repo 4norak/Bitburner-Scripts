@@ -117,7 +117,7 @@ export async function main(ns) {
 			let answer;
 			try {
 				if (!(answer = await fetch_answer(ns, contract))) {
-					ns.print(COLORS.yellow + "Temporary error for " + contract.filename + " on " + contract.hostname + COLORS.default);
+					ns.print(COLORS.yellow + "Could not contact API" + COLORS.default);
 					continue;
 				}
 			}
