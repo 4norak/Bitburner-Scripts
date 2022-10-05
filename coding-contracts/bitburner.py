@@ -542,7 +542,7 @@ def spiralize_matrix(matrix: list[list[int]]) -> list[int]:
                  lambda m: _pop_col(matrix, 0)[::-1]] # Pop and return first column reversed
     i = 0
     while matrix:
-        spiral += functions[i % 4]
+        spiral += functions[i % 4](matrix)
         i += 1
 
     return spiral
