@@ -62,6 +62,10 @@ It also slowly weakens the server.
 |:--------:|:--------|
 | `_` | The hostname of the server to gain money from |
 
+## monitor.js
+
+Monitors and displays the status of services.
+
 ## solve-contracts.js
 
 Solves contracts by using the api in [coding-contracts](/coding-contracts).  
