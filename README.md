@@ -1,6 +1,6 @@
 # Bitburner Scripts
 
-A collection of scripts for the game Bitburner (https://github.com/danielyxie/bitburner).
+A collection of scripts for the game [Bitburner](https://github.com/danielyxie/bitburner).
 
 ## Coding Contracts
 
