@@ -150,9 +150,13 @@ def algorithmic_stock(prices: tuple[int], num_transactions: int) -> int:
         if num_transactions <= 0:
             return part_sum
         max_sum = part_sum
-        transactions = tuple(transactions)
-        for i, t in enumerate(transactions):
-            if (s := _get_max_transaction_gain(_remove_overlapping(transactions[i:], t), num_transactions - 1, part_sum + t[1])) > max_sum:
+        # transactions = tuple(transactions)
+        t1, t2 = _itertools.tee(transactions, 2)
+        # for i, t in enumerate(transactions)
+        for i, t in enumerate(t1):
+            t2, t3 = _itertools.tee(t2, 2)
+            # if (s := _get_max_transaction_gain(_remove_overlapping(transactions[i:], t), num_transactions - 1, part_sum + t[1])) > max_sum:
+            if (s := _get_max_transaction_gain(_remove_overlapping(_itertools.islice(t3, i, None), t), num_transactions - 1, part_sum + t[1])) > max_sum:
                 max_sum = s
         return max_sum
 
@@ -437,7 +441,7 @@ def generate_ips(base: str) -> list[str]:
     valid: list[str] = []
 
     # For all possibilities to split base in 4 parts
-    for inds in _itertools.combinations(range(1,len(base) - 1), r=3):
+    for inds in _itertools.combinations(range(1,len(base)), r=3):
         # Split base by indices
         inds += (len(base),)
         ip: str = [base[0:inds[0]]]
