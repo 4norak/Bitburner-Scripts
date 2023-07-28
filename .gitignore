@@ -1,4 +1,4 @@
-/cc/build
+/coding-contracts/build/
 *.so
 *.o
 __pycache__/
